@@ -11,7 +11,7 @@ DEFAULT_ROBOT_TESTS="false"
 LOG_LEVEL=${LOG_LEVEL:-$DEFAULT_LOG_LEVEL}
 RES=${RES:-$DEFAULT_RES}     
 DISPLAY=${DISPLAY:-$DEFAULT_DISPLAY}
-ROBOT_TESTS=${ROBOT_TESTS:-$ROBOT_TESTS}
+ROBOT_TESTS=${ROBOT_TESTS:-$DEFAULT_ROBOT_TESTS}
 if [[ "${ROBOT_TESTS}" == "false" ]]; then
   echo "Error: Please specify the robot test or directory as env var ROBOT_TESTS"
   exit 1

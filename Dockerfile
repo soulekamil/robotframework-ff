@@ -1,19 +1,21 @@
-FROM gliderlabs/alpine:3.3
+FROM gliderlabs/alpine:3.6
 MAINTAINER "Kamil Soule"
 LABEL name="Docker image for the Robot Framework http://robotframework.org/ with dependencies for test runs in Firefox, using Xvfb"
 # Setting compatible versions of dependencies
-ENV SELENIUM=2.53.6
-ENV ROBOTFRAMEWORK=2.9.2
-ENV SELENIUM2LIBRARY=1.7.4
+ARG SELENIUM=3.4.3
+ARG ROBOTFRAMEWORK=3.0.2
+ARG SELENIUM2LIBRARY=1.8.0
+ARG FIREFOX=52.2.0-r0
 # Installing Python Pip, Robot framework, browser and mysql-client
-RUN apk-install bash py-pip firefox xvfb dbus mysql-client && \
+RUN apk-install bash py-pip dbus ttf-freefont firefox-esr=52.2.0-r0 \
+    xvfb mysql-client && \
     pip install --upgrade pip && \
     pip install robotframework==$ROBOTFRAMEWORK robotframework-selenium2library==$SELENIUM2LIBRARY selenium==$SELENIUM robotframework-xvfb
-# Instaling selenium webdriver for firefox
+ARG GECKODRIVER=0.17.0
 RUN apk-install curl && \
-  curl -SLO "https://github.com/mozilla/geckodriver/releases/download/v0.11.1/geckodriver-v0.11.1-linux64.tar.gz" && \
-  tar xfz  "geckodriver-v0.11.1-linux64.tar.gz" -C /usr/bin/ && \
-  rm "geckodriver-v0.11.1-linux64.tar.gz" 
+  curl -SLO "https://github.com/mozilla/geckodriver/releases/download/v$GECKODRIVER/geckodriver-v$GECKODRIVER-linux64.tar.gz" && \
+  tar xfz  "geckodriver-v$GECKODRIVER-linux64.tar.gz" -C /usr/bin/ && \
+  rm "geckodriver-v$GECKODRIVER-linux64.tar.gz" 
 ADD test-runner.sh /usr/local/bin/test-runner.sh
 RUN chmod +x /usr/local/bin/test-runner.sh
 CMD ["test-runner.sh"]
