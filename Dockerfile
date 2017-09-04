@@ -5,7 +5,7 @@ LABEL name="Docker image for the Robot Framework http://robotframework.org/ with
 ARG SELENIUM=2.53.6
 ARG ROBOTFRAMEWORK=2.9.2
 ARG SELENIUM2LIBRARY=1.8.0
-ARG FIREFOX=52.2.0-r0
+ARG FIREFOX=52.3.0-r0
 # Installing Python Pip, Robot framework, browser and mysql-client
 RUN apk-install bash py-pip dbus ttf-freefont firefox-esr=$FIREFOX \
     xvfb mysql-client && \
