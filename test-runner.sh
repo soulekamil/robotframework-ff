@@ -1,21 +1,14 @@
 #!/bin/bash
-# Script that runs robot framework tests on Xvfb
-# Entry script to start Xvfb and set display
+# Script that runs robot framework tests on Xvfb using Firefox as a browser
 set -e
-# Set the defaults
+# Set the defaults values
 DEFAULT_LOG_LEVEL="INFO" # Available levels: TRACE, DEBUG, INFO (default), WARN, NONE (no logging)
 DEFAULT_RES="1280x1024x24"
-DEFAULT_DISPLAY=":99"
-DEFAULT_ROBOT_TESTS="false"
 # Use default if none specified as env var
 LOG_LEVEL=${LOG_LEVEL:-$DEFAULT_LOG_LEVEL}
 RES=${RES:-$DEFAULT_RES}     
-DISPLAY=${DISPLAY:-$DEFAULT_DISPLAY}
-ROBOT_TESTS=${ROBOT_TESTS:-$DEFAULT_ROBOT_TESTS}
-if [[ "${ROBOT_TESTS}" == "false" ]]; then
-  echo "Error: Please specify the robot test or directory as env var ROBOT_TESTS"
-  exit 1
-fi
+DISPLAY=":99"
+ROBOT_TESTS="/Tests/"
 # Start Xvfb
 echo -e "Starting Xvfb on display ${DISPLAY} with res ${RES}"
 Xvfb ${DISPLAY} -ac -screen 0 ${RES} +extension RANDR &
@@ -24,6 +17,6 @@ export DISPLAY=${DISPLAY}
 echo Firefox version is: `firefox -v`
 # Execute tests
 echo -e "Executing robot tests at log level ${LOG_LEVEL}"
-pybot -d /TestResults --loglevel ${LOG_LEVEL} ${ROBOT_TESTS}
+pybot -d /TestResults/TestResults-`date +%Y-%m-%d-%H_%M_%S` --loglevel ${LOG_LEVEL} ${ROBOT_TESTS}
 # Stop Xvfb
 kill -9 $(pgrep Xvfb)
