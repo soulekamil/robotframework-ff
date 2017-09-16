@@ -6,9 +6,9 @@ ARG SELENIUM=2.53.6
 ARG ROBOTFRAMEWORK=2.9.2
 ARG SELENIUM2LIBRARY=1.8.0
 ARG FIREFOX=52.3.0-r0
-# Installing Python Pip, Robot framework, browser and mysql-client
+# Installing Python Pip, Robot framework, browser and
 RUN apk-install bash py-pip dbus ttf-freefont firefox-esr=$FIREFOX \
-    xvfb mysql-client && \
+    xvfb && \
     pip install --upgrade pip && \
     pip install robotframework==$ROBOTFRAMEWORK robotframework-selenium2library==$SELENIUM2LIBRARY selenium==$SELENIUM robotframework-xvfb
 # Instaling selenium webdriver for firefox
